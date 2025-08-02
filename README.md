@@ -1,2 +1,13 @@
-# AgroTrust
-AgroTrust is a blockchain-based agri supply chain management system designed to bring transparency, traceability and trust to agricultural produce like turmeric, rice and other crops. It captures and secures every critical stage of the crop lifecycle in blockchain's immutable ledger to verify the authenticity of the crop.
+# Sample Hardhat Project
+
+This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+
+Try running some of the following tasks:
+
+```shell
+npx hardhat help
+npx hardhat test
+REPORT_GAS=true npx hardhat test
+npx hardhat node
+npx hardhat ignition deploy ./ignition/modules/Lock.ts
+```
