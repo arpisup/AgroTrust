@@ -1,233 +1,242 @@
-# AgroTrust - Blockchain-based GI Product Verification System
+# AgroTrust - Blockchain-Based GI Product Traceability System
 
-## 🌾 Overview
+A comprehensive blockchain-based system for verifying authenticity of GI (Geographical Indication) tagged products with complete traceability from farm to consumer.
 
-AgroTrust is a blockchain-based system designed to verify the authenticity of Geographical Indication (GI) tagged agricultural products. This system provides end-to-end traceability for GI products from farm to consumer, ensuring transparency, authenticity, and trust in the agricultural supply chain.
+## 🏗️ System Architecture
 
-## 🎯 Purpose
+```
+AgroTrust/
+├── AgroTrust/          # Smart Contract (Hardhat)
+│   ├── contracts/      # Solidity smart contracts
+│   ├── scripts/        # Deployment and interaction scripts
+│   └── test/          # Smart contract tests
+├── backend/            # Node.js/Express API
+│   ├── src/
+│   │   ├── routes/     # API endpoints
+│   │   ├── services/   # Blockchain service
+│   │   └── middleware/ # Error handling
+│   └── package.json
+└── frontend/           # React Application with MetaMask
+    ├── src/
+    │   ├── pages/      # React components
+    │   ├── components/ # Reusable components
+    │   └── services/   # MetaMask integration
+    └── package.json
+```
 
-Geographical Indication (GI) tags are used to identify products that originate from a specific geographical location and possess qualities or reputation due to that origin. Examples include:
-- **Erode Turmeric** (Tamil Nadu, India)
-- **Darjeeling Tea** (West Bengal, India)
-- **Basmati Rice** (India/Pakistan)
-- **Champagne** (France)
-- **Parmigiano Reggiano** (Italy)
+## 🚀 Quick Start
 
-AgroTrust addresses the challenges of:
-- **Counterfeit GI products** in the market
-- **Lack of transparency** in supply chains
-- **Difficulty in verification** of product authenticity
-- **Limited traceability** from farm to consumer
-
-## 🏗️ Architecture
-
-### Smart Contract Structure
-
-The `AgroTrust` smart contract manages the following data structures:
-
-1. **Batch Information** - Basic product details (crop, variety, location, harvest date)
-2. **Farmer Information** - Details about the farmer and farm location
-3. **Cultivation Details** - Agricultural practices, soil type, irrigation, pesticides
-4. **Processing Information** - Post-harvest processing details
-5. **Lab Results** - Quality testing and certification results
-6. **Certificates** - GI certificates and compliance documents
-7. **Transfer Records** - Complete ownership and location transfer history
-8. **Trace Data** - QR codes and consumer-facing information
-
-### Access Control
-
-- **Owner**: Has full administrative privileges
-- **Authorized Users**: Can add and modify data (farmers, processors, labs, etc.)
-- **Public**: Can view all data for verification purposes
-
-## 🚀 Features
-
-### Core Functionality
-
-- ✅ **Batch Creation**: Register new product batches with unique identifiers
-- ✅ **Farmer Registration**: Record farmer and farm details
-- ✅ **Cultivation Tracking**: Monitor agricultural practices and conditions
-- ✅ **Processing Records**: Track post-harvest processing methods
-- ✅ **Lab Testing**: Store quality test results and certifications
-- ✅ **GI Certification**: Manage geographical indication certificates
-- ✅ **Transfer History**: Complete audit trail of product movement
-- ✅ **QR Code Integration**: Consumer-facing verification system
-- ✅ **Access Control**: Role-based permissions for data management
-
-### Security Features
-
-- 🔒 **Immutable Records**: Once recorded, data cannot be altered
-- 🔒 **Access Control**: Only authorized users can modify data
-- 🔒 **Event Logging**: All changes are logged as blockchain events
-- 🔒 **Batch Validation**: Prevents duplicate batch creation
-- 🔒 **Existence Checks**: Ensures data integrity across operations
-
-## 📋 Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
+### Prerequisites
+- Node.js (v16+)
+- npm
+- MetaMask browser extension
 - Git
 
-## 🛠️ Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd AgroTrust
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Compile contracts**
-   ```bash
-   npm run compile
-   ```
-
-## 🧪 Testing
-
-Run the comprehensive test suite:
-
+### 1. Clone and Setup
 ```bash
-# Run all tests
-npm test
-
-# Run tests with gas reporting
-npm run test:gas
+git clone <repository-url>
+cd AgroTrust
 ```
 
-The test suite covers:
-- Contract deployment and initialization
-- Access control mechanisms
-- Batch creation and management
-- Data addition for all categories
-- Transfer record tracking
-- Complete workflow testing
-- Error handling and edge cases
+### 2. Install Dependencies
+```bash
+# Install smart contract dependencies
+cd AgroTrust
+npm install
 
-## 🚀 Deployment
+# Install backend dependencies
+cd ../backend
+npm install
 
-### Local Development
+# Install frontend dependencies
+cd ../frontend
+npm install
+```
 
-1. **Start local blockchain**
+### 3. Start the System
+
+#### Step 1: Start Blockchain Network
+```bash
+cd AgroTrust
+npm run node
+```
+**Keep this terminal running!**
+
+#### Step 2: Deploy Smart Contract
+```bash
+# In a new terminal
+cd AgroTrust
+npm run deploy:local
+```
+
+#### Step 3: Populate Sample Data
+```bash
+# In the same terminal
+npm run populate
+```
+
+#### Step 4: Start Backend (Optional)
+```bash
+# In a new terminal
+cd backend
+npm run dev
+```
+
+#### Step 5: Start Frontend
+```bash
+# In a new terminal
+cd frontend
+npm run dev
+```
+
+### 4. Configure MetaMask
+
+1. **Install MetaMask** if not already installed
+2. **Add Local Network**:
+   - Network Name: `Hardhat Local`
+   - RPC URL: `http://localhost:8545`
+   - Chain ID: `31337`
+   - Currency Symbol: `ETH`
+3. **Import Account**:
+   - Use private key: `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`
+   - This account has 10,000 ETH for testing
+
+## 🎯 Features
+
+### ✅ Smart Contract Features
+- Complete data structures for GI products
+- Access control and validation
+- Event emission for transparency
+- All setter and getter functions
+
+### ✅ Frontend Features
+- **MetaMask Integration**: Direct blockchain interaction
+- **Batch Lookup**: Search existing batches
+- **Real-time Data**: Live blockchain data fetching
+- **Professional UI**: Government-grade interface
+- **Mobile Responsive**: Works on all devices
+
+### ✅ Pre-populated Data
+- **Erode Turmeric (ERD-TUR-2025-001)**: Complete traceability data
+- **Kanyakumari Clove (KC-CLOVE-2025-001)**: Complete traceability data
+
+### ✅ Backend Features (Optional)
+- RESTful API endpoints
+- Blockchain service integration
+- Health monitoring
+- Error handling
+
+## 🔍 How to Use
+
+### 1. Batch Lookup
+1. Go to http://localhost:3000
+2. Click "Batch Lookup"
+3. Connect MetaMask when prompted
+4. Search for existing batches:
+   - `ERD-TUR-2025-001` (Erode Turmeric)
+   - `KC-CLOVE-2025-001` (Kanyakumari Clove)
+5. View complete traceability information
+
+### 2. Add New Batches
+1. Go to http://localhost:3000
+2. Click "Add Data"
+3. Fill out the batch information
+4. Connect MetaMask to submit transactions
+5. View transaction confirmation
+
+### 3. QR Code Scanning
+1. Go to http://localhost:3000
+2. Click "QR Scanner"
+3. Enter batch ID or scan QR code
+4. View traceability information
+
+## 📊 Available Data
+
+### Erode Turmeric (ERD-TUR-2025-001)
+- **Crop**: Turmeric
+- **Variety**: Erode Manjal
+- **Location**: Erode, Tamil Nadu
+- **Farmer**: Dhanasekaran V
+- **Soil Type**: Red Soil
+- **Irrigation**: Drip Irrigation
+- **Processor**: Erode Processing Unit
+- **Lab Result**: Curcumin content: 3.5%, Moisture: 9%
+- **Certificate**: GI Certificate from Erode Turmeric Merchants Association
+
+### Kanyakumari Clove (KC-CLOVE-2025-001)
+- **Crop**: Clove
+- **Variety**: Kanyakumari Clove
+- **Location**: Kanyakumari, Tamil Nadu
+- **Farmer**: Chinnachenna Naicker
+- **Soil Type**: Laterite Soil
+- **Irrigation**: Rain-fed
+- **Processor**: Kanyakumari Processing Unit
+- **Lab Result**: Eugenol content: 85%, Moisture: 9%
+- **Certificate**: GI Certificate from Spices Board India
+
+## 🔧 Troubleshooting
+
+### MetaMask Connection Issues
+1. **Ensure MetaMask is installed**
+2. **Check network configuration**:
+   - Network: Hardhat Local
+   - RPC URL: http://localhost:8545
+   - Chain ID: 31337
+3. **Verify account import**:
+   - Use the provided private key
+   - Account should have ETH balance
+
+### Blockchain Connection Issues
+1. **Check Hardhat node**:
    ```bash
+   cd AgroTrust
    npm run node
    ```
-
-2. **Deploy contract**
+2. **Verify contract deployment**:
    ```bash
-   # Using Hardhat script
    npm run deploy:local
-   
-   # Using Hardhat Ignition
-   npm run deploy:ignition:local
    ```
-
-### Production Deployment
-
-1. **Configure networks** in `hardhat.config.ts`
-2. **Set environment variables** for private keys and RPC URLs
-3. **Deploy to target network**
+3. **Check data population**:
    ```bash
-   npm run deploy
+   npm run populate
+   npm run verify
    ```
 
-## 💻 Usage
+### Frontend Issues
+1. **Check MetaMask connection**
+2. **Verify network selection**
+3. **Check browser console for errors**
+4. **Ensure all dependencies are installed**
 
-### Basic Workflow
-
-1. **Create a Batch**
-   ```solidity
-   createBatch(batchId, cropName, variety, location, harvestDate)
+### Backend Issues (Optional)
+1. **Check if backend is running**:
+   ```bash
+   cd backend
+   npm run dev
    ```
+2. **Verify environment variables**
+3. **Check blockchain connection**
 
-2. **Add Farmer Information**
-   ```solidity
-   addFarmerInfo(batchId, farmerName, farmLocation, contact, farmerId)
-   ```
+## 🛠️ Development
 
-3. **Record Cultivation Details**
-   ```solidity
-   addCultivationDetails(batchId, soilType, irrigationType, pesticideUsed, sowingDate, area)
-   ```
-
-4. **Add Processing Information**
-   ```solidity
-   addProcessingInfo(batchId, processorName, method, processingDate, processingUnitId)
-   ```
-
-5. **Store Lab Results**
-   ```solidity
-   addLabResult(batchId, labName, result, testDate, reportHash)
-   ```
-
-6. **Add GI Certificate**
-   ```solidity
-   addCertificate(batchId, issuedBy, certificateType, issueDate, certificateId)
-   ```
-
-7. **Record Transfers**
-   ```solidity
-   addTransferRecord(batchId, from, to, purpose)
-   ```
-
-8. **Add Trace Data**
-   ```solidity
-   addTraceData(batchId, notes, qrCodeHash)
-   ```
-
-### Sample Interaction
-
-Run the sample interaction script to see a complete workflow:
-
+### Smart Contract Development
 ```bash
-# Update the contract address in scripts/interact.ts first
-npm run interact:local
+cd AgroTrust
+npm run compile
+npm run test
+npm run deploy:local
 ```
 
-This will demonstrate the complete lifecycle of an Erode Turmeric batch.
+### Frontend Development
+```bash
+cd frontend
+npm run dev
+```
 
-## 📊 Data Verification
-
-### For Consumers
-
-1. **Scan QR Code** on the product
-2. **Enter Batch ID** on the verification portal
-3. **View Complete Traceability Report** including:
-   - Product origin and variety
-   - Farmer and farm details
-   - Cultivation practices
-   - Processing methods
-   - Lab test results
-   - GI certification
-   - Complete transfer history
-
-### For Stakeholders
-
-- **Farmers**: Verify their products are properly registered
-- **Processors**: Track processing history and quality metrics
-- **Retailers**: Ensure product authenticity before sale
-- **Regulators**: Monitor compliance and certification status
-
-## 🔧 Configuration
-
-### Hardhat Configuration
-
-The project uses Hardhat with the following features:
-- **Solidity 0.8.20** with optimization enabled
-- **TypeScript** support
-- **Gas reporting** for optimization
-- **Network configuration** for multiple environments
-
-### Environment Variables
-
-Create a `.env` file for sensitive data:
-```env
-PRIVATE_KEY=your_private_key_here
-INFURA_URL=your_infura_url_here
-ETHERSCAN_API_KEY=your_etherscan_key_here
+### Backend Development
+```bash
+cd backend
+npm run dev
 ```
 
 ## 📁 Project Structure
@@ -237,53 +246,63 @@ AgroTrust/
 ├── contracts/
 │   └── AgroTrust.sol          # Main smart contract
 ├── scripts/
-│   ├── deploy.ts              # Deployment script
-│   └── interact.ts            # Sample interaction script
+│   ├── deploy.ts              # Contract deployment
+│   ├── populateData.ts        # Sample data population
+│   └── verifyData.ts          # Data verification
 ├── test/
-│   └── AgroTrust.ts           # Comprehensive test suite
-├── ignition/
-│   └── modules/
-│       └── AgroTrust.ts       # Hardhat Ignition deployment
-├── hardhat.config.ts          # Hardhat configuration
-├── package.json               # Dependencies and scripts
-└── README.md                  # This file
+│   └── AgroTrust.test.ts      # Smart contract tests
+├── backend/
+│   ├── src/
+│   │   ├── routes/
+│   │   │   └── batchRoutes.ts # API endpoints
+│   │   ├── services/
+│   │   │   └── blockchainService.ts # Blockchain integration
+│   │   └── index.ts           # Server setup
+│   └── package.json
+└── frontend/
+    ├── src/
+    │   ├── pages/
+    │   │   ├── BatchLookup.tsx    # Batch search
+    │   │   ├── BatchDetails.tsx   # Batch details
+    │   │   └── AddData.tsx        # Data addition
+    │   ├── services/
+    │   │   └── metamaskService.ts # MetaMask integration
+    │   └── App.tsx
+    └── package.json
 ```
 
-## 🤝 Contributing
+## 🔒 Security Features
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- **Access Control**: Only authorized users can modify data
+- **Immutable Records**: All data stored on blockchain
+- **Transaction Verification**: All changes are verifiable
+- **Event Logging**: Complete audit trail
 
-## 📝 License
+## 🌐 Access Points
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:3001 (optional)
+- **Blockchain**: http://localhost:8545
+- **Health Check**: http://localhost:3001/api/health
 
-## 🆘 Support
+## 📞 Support
 
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation
+For issues and questions:
+1. Check the troubleshooting section
+2. Verify all services are running
+3. Check browser console for errors
+4. Ensure MetaMask is properly configured
 
-## 🔮 Future Enhancements
+## 🎉 Success Indicators
 
-- **Mobile App**: Consumer-facing mobile application
-- **IoT Integration**: Real-time sensor data from farms
-- **AI/ML**: Predictive analytics for quality assessment
-- **Multi-chain Support**: Integration with other blockchains
-- **API Gateway**: RESTful API for external integrations
-- **Dashboard**: Web-based management interface
-
-## 📚 References
-
-- [Geographical Indications in India](https://ipindia.gov.in/geographical-indications.htm)
-- [Hardhat Documentation](https://hardhat.org/docs)
-- [Solidity Documentation](https://docs.soliditylang.org/)
-- [Ethereum Development](https://ethereum.org/developers/)
+You'll know everything is working when:
+1. ✅ Hardhat node shows "Started HTTP and WebSocket JSON-RPC server"
+2. ✅ Contract deployment shows "Deployment completed successfully"
+3. ✅ Data population shows all ✅ marks
+4. ✅ Frontend loads without errors
+5. ✅ MetaMask connects successfully
+6. ✅ Batch lookup shows real blockchain data
 
 ---
 
-**Built with ❤️ for transparent and trustworthy agriculture**
+**🎯 The system is now fully functional with MetaMask integration, real blockchain data, and complete traceability features!** 

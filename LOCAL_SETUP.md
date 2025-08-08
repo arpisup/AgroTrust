@@ -1,59 +1,124 @@
 # AgroTrust Local Setup Guide
 
-## 🚀 Quick Start - Run AgroTrust Locally
+## 🎯 Complete Setup Instructions
 
-This guide will walk you through setting up and running the AgroTrust blockchain system locally on your machine. No frontend or backend required - everything runs through the command line!
+This guide will help you set up the entire AgroTrust system locally with MetaMask integration.
 
 ## 📋 Prerequisites
 
-- **Node.js** (v16 or higher) - [Download here](https://nodejs.org/)
+- **Node.js** (v16 or higher)
 - **npm** (comes with Node.js)
-- **Git** (optional, for version control)
+- **MetaMask** browser extension
+- **Git** (for cloning the repository)
 
-## 🛠️ Installation
+## 🚀 Step-by-Step Setup
 
-### 1. Navigate to Project Directory
+### Step 1: Clone and Navigate
 ```bash
+git clone <repository-url>
 cd AgroTrust
 ```
 
-### 2. Install Dependencies
+### Step 2: Install Dependencies
+
+#### Smart Contract Dependencies
 ```bash
+cd AgroTrust
 npm install
 ```
 
-### 3. Compile Smart Contracts
+#### Backend Dependencies
 ```bash
-npm run compile
+cd ../backend
+npm install
 ```
 
-## 🏃‍♂️ Running the System Locally
-
-### Step 1: Start Local Blockchain Network
-
-Open a **new terminal window** and run:
+#### Frontend Dependencies
 ```bash
+cd ../frontend
+npm install
+```
+
+### Step 3: Start the Blockchain Network
+
+Open a new terminal and run:
+```bash
+cd AgroTrust
 npm run node
 ```
 
 **Expected Output:**
 ```
 Started HTTP and WebSocket JSON-RPC server at http://127.0.0.1:8545/
-
-Accounts
-========
-Account #0: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 (10000 ETH)
-Account #1: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 (10000 ETH)
-Account #2: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC (10000 ETH)
-...
 ```
 
-**Keep this terminal running!** This is your local blockchain network.
+**⚠️ Keep this terminal running!**
 
-### Step 2: Deploy the Smart Contract
+
+### Step 4: Deploy the Smart Contract
 
 Open a **second terminal window** and run:
 ```bash
+cd AgroTrust
+npm run deploy:local
+```
+
+This will deploy the contract and automatically generate/update `deployed-contract.json` with the correct contract address and ABI. **All scripts, frontend, and backend now use this file as the single source of truth.**
+
+**If you redeploy the contract, always use the latest `deployed-contract.json`!**
+
+---
+
+### Step 5: Populate Sample Data (Optional)
+
+To add demo batches and data to the blockchain, run:
+```bash
+npm run populate
+```
+
+---
+
+### Step 6: Start Backend API
+
+Open a new terminal and run:
+```bash
+cd backend
+npm start
+```
+
+---
+
+### Step 7: Start Frontend
+
+Open a new terminal and run:
+```bash
+cd frontend
+npm run dev
+```
+
+---
+
+## 🔗 How Contract Address & ABI Are Managed
+
+- The file `AgroTrust/deployed-contract.json` is the **only** place the contract address and ABI are stored.
+- The backend and frontend both read this file at runtime (no more hardcoded addresses or ABIs).
+- If you redeploy the contract, this file will update automatically. **Restart the backend and frontend after redeploying!**
+
+---
+
+## 🛠️ Troubleshooting
+
+- **MetaMask connection errors:** Make sure your MetaMask is on the correct local network (http://127.0.0.1:8545/).
+- **Contract connection errors:** Ensure the blockchain node is running and `deployed-contract.json` is up to date.
+- **Batch not found:** Run `npm run populate` to add sample data.
+
+---
+
+## 📝 Notes
+
+- All contract interactions (frontend, backend, scripts) are now fully consistent and use the same contract instance.
+- If you encounter any issues, check that all services are using the latest `deployed-contract.json`.
+cd AgroTrust
 npm run deploy:local
 ```
 
@@ -66,248 +131,245 @@ Owner is authorized: true
 Deployment completed successfully!
 ```
 
-**Note the contract address:** `0x5FbDB2315678afecb367f032d93F642f64180aa3`
-
-### Step 3: Run the Complete Demo
+### Step 5: Populate Sample Data
 
 In the same terminal, run:
 ```bash
-npm run interact:local
+npm run populate
 ```
 
 **Expected Output:**
 ```
-Interacting with AgroTrust contract...
-
-1. Creating new batch...
-✓ Batch created: TURMERIC2025_002
-
-2. Adding farmer information...
-✓ Farmer information added
-
-3. Adding cultivation details...
+=== Adding Turmeric Data ===
+✓ Batch created
+✓ Farmer info added
 ✓ Cultivation details added
-
-4. Adding processing information...
-✓ Processing information added
-
-5. Adding lab test results...
-✓ Lab results added
-
-6. Adding GI certificate...
-✓ GI certificate added
-
-7. Adding transfer records...
-✓ Transfer records added
-
-8. Adding trace data...
+✓ Processing info added
+✓ Lab result added
+✓ Certificate added
+✓ Transfer record added
 ✓ Trace data added
 
-9. Retrieving complete product information...
+=== Adding Clove Data ===
+✓ Batch created
+✓ Farmer info added
+✓ Cultivation details added
+✓ Processing info added
+✓ Lab result added
+✓ Certificate added
+✓ Transfer record added
+✓ Trace data added
 
-=== COMPLETE PRODUCT TRACEABILITY REPORT ===
-Batch ID: TURMERIC2025_002
-Crop: Turmeric - Erode Manjal
-Location: Erode, Tamil Nadu
-Harvest Date: [Current Date]
-
-Farmer: Ravi Kumar
-Farm Location: Bhavani, Erode District
-Contact: +91-9876543210
-Farmer ID: FARMER001
-
-Cultivation Area: 15000 sq meters
-Soil Type: Red Loamy Soil
-Irrigation: Drip Irrigation
-Pesticide: Organic Neem Spray
-
-Processor: Erode Traditional Processing Unit
-Method: Traditional Sun Drying
-Processing Date: [Current Date]
-
-Lab: Food Safety and Standards Authority of India
-Result: Passed - Curcumin content: 5.2%, Moisture: 8.5%, All parameters within GI standards
-Test Date: [Current Date]
-
-Certificate: Erode Turmeric GI Certificate
-Issued By: Geographical Indications Registry, Chennai
-Certificate ID: GI_ERODE_TURMERIC_2025_001
-
-Transfer History:
-  1. Farmer Ravi Kumar → Erode Processing Unit (Harvest to Processing)
-     Date: [Current Date]
-  2. Erode Processing Unit → Chennai Distribution Center (Processing to Distribution)
-     Date: [Current Date]
-
-Trace Notes: Product ready for retail distribution. QR code generated for consumer verification.
-QR Code Hash: QrCodeHash123456789abcdef
-
-=== END OF REPORT ===
-
-✓ All operations completed successfully!
+=== Data Population Complete ===
+✓ Turmeric batch ID: ERD-TUR-2025-001
+✓ Clove batch ID: KC-CLOVE-2025-001
 ```
 
-## 🎯 What Just Happened?
+### Step 6: Verify Data (Optional)
 
-### ✅ **Complete GI Product Lifecycle Tracked:**
-
-1. **Batch Creation**: `TURMERIC2025_002` - Erode Turmeric from Tamil Nadu
-2. **Farmer Information**: Ravi Kumar from Bhavani, Erode District
-3. **Cultivation Details**: 15,000 sq meters, Red Loamy Soil, Drip Irrigation, Organic Neem
-4. **Processing**: Traditional Sun Drying at Erode Processing Unit
-5. **Lab Testing**: FSSAI certification with quality parameters
-6. **GI Certificate**: Official GI certificate from Chennai Registry
-7. **Transfer History**: Complete audit trail from farm to distribution
-8. **Trace Data**: QR code for consumer verification
-
-### 🔍 **Key Features Demonstrated:**
-
-- **Immutable Records**: All data is permanently stored on the blockchain
-- **Complete Traceability**: From farm to consumer
-- **Quality Assurance**: Lab results and certifications
-- **Transfer Tracking**: Every handoff recorded with timestamps
-- **Consumer Verification**: QR code system for end-user verification
-
-## 🛠️ Advanced Usage
-
-### Interactive Console (Optional)
-
-You can interact with the contract manually using the Hardhat console:
-
+In the same terminal, run:
 ```bash
-npx hardhat console --network localhost
+npm run verify
 ```
 
-**Example console commands:**
-```javascript
-// Get the contract
-const AgroTrust = await ethers.getContractFactory("AgroTrust");
-const agroTrust = AgroTrust.attach("0x5FbDB2315678afecb367f032d93F642f64180aa3");
+**Expected Output:**
+```
+=== Checking Erode Turmeric (Erode Manjal) ===
+✓ Batch exists: true
+✓ Crop: Turmeric
+✓ Variety: Erode Manjal
+✓ Location: Erode, Tamil Nadu
+✅ Erode Turmeric (Erode Manjal) data is complete and accessible!
 
-// Check if a batch exists
-await agroTrust.checkBatchExists("TURMERIC2025_002");
-
-// Get batch information
-const batch = await agroTrust.getBatch("TURMERIC2025_002");
-console.log(batch);
-
-// Get farmer information
-const farmer = await agroTrust.getFarmerInfo("TURMERIC2025_002");
-console.log(farmer);
+=== Checking Kanyakumari Clove ===
+✓ Batch exists: true
+✓ Crop: Clove
+✓ Variety: Kanyakumari Clove
+✓ Location: Kanyakumari, Tamil Nadu
+✅ Kanyakumari Clove data is complete and accessible!
 ```
 
-### Run Tests
+### Step 7: Configure MetaMask
 
-To verify everything is working correctly:
+1. **Install MetaMask** (if not already installed)
+   - Go to https://metamask.io/
+   - Install the browser extension
+
+2. **Add Local Network**:
+   - Open MetaMask
+   - Click on the network dropdown (usually shows "Ethereum Mainnet")
+   - Click "Add Network"
+   - Fill in the details:
+     - **Network Name**: `Hardhat Local`
+     - **RPC URL**: `http://localhost:8545`
+     - **Chain ID**: `31337`
+     - **Currency Symbol**: `ETH`
+   - Click "Save"
+
+3. **Import Test Account**:
+   - In MetaMask, click on the account icon
+   - Click "Import Account"
+   - Enter the private key: `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`
+   - Click "Import"
+   - This account will have 10,000 ETH for testing
+
+### Step 8: Start the Backend (Optional)
+
+Open a third terminal and run:
 ```bash
-# Run all tests
-npm test
-
-# Run tests with gas reporting
-npm run test:gas
+cd backend
+npm run dev
 ```
 
-### Create Multiple Batches
-
-To create another batch, edit `scripts/interact.ts` and change the batch ID:
-```typescript
-const batchId = "DARJEELING2025_001"; // Change this
+**Expected Output:**
+```
+🚀 AgroTrust Backend Server running on port 3001
+📊 Health check: http://localhost:3001/api/health
+🔗 API Base URL: http://localhost:3001/api
 ```
 
-Then run:
+### Step 9: Start the Frontend
+
+Open a fourth terminal and run:
 ```bash
-npm run interact:local
+cd frontend
+npm run dev
+```
+
+**Expected Output:**
+```
+  VITE v5.0.8  ready in 500 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+```
+
+## 🎯 Testing the System
+
+### 1. Test MetaMask Connection
+
+1. Go to http://localhost:3000
+2. Click "Batch Lookup"
+3. Click "Connect MetaMask"
+4. Approve the connection in MetaMask
+5. You should see "Connected" with your account address
+
+### 2. Test Batch Lookup
+
+1. In the Batch Lookup page, you'll see two available batches
+2. Click on either batch or enter the batch ID manually:
+   - `ERD-TUR-2025-001` for Erode Turmeric
+   - `KC-CLOVE-2025-001` for Kanyakumari Clove
+3. Click "Lookup Batch"
+4. You should see complete blockchain data
+
+### 3. Test Backend Health (Optional)
+
+If you started the backend, visit:
+- http://localhost:3001/api/health
+
+**Expected Response:**
+```json
+{
+  "status": "healthy",
+  "services": {
+    "api": "healthy",
+    "blockchain": {
+      "status": "connected",
+      "networkName": "hardhat",
+      "chainId": 31337
+    }
+  }
+}
 ```
 
 ## 🔧 Troubleshooting
 
-### Common Issues
+### Issue: "MetaMask is not installed"
+**Solution**: Install MetaMask browser extension from https://metamask.io/
 
-1. **"Batch already exists" error**
-   - Solution: Change the batch ID in `scripts/interact.ts`
+### Issue: "MetaMask connection failed"
+**Solution**:
+1. Check if MetaMask is unlocked
+2. Verify you're on the correct network (Hardhat Local)
+3. Ensure the account is imported with the correct private key
 
-2. **"Cannot find module" errors**
-   - Solution: Run `npm install` again
+### Issue: "Batch not found"
+**Solution**:
+1. Ensure the Hardhat node is running
+2. Run `npm run populate` to add the data
+3. Run `npm run verify` to confirm data exists
 
-3. **Port 8545 already in use**
-   - Solution: Kill any existing Hardhat processes or change the port
+### Issue: "Cannot connect to network"
+**Solution**:
+1. Check if Hardhat node is running on port 8545
+2. Verify MetaMask network configuration
+3. Ensure RPC URL is correct: `http://localhost:8545`
 
-4. **BigInt conversion errors**
-   - Solution: The script has been fixed to handle BigInt properly
+### Issue: "Transaction failed"
+**Solution**:
+1. Check if the account has ETH balance
+2. Verify you're on the correct network
+3. Check if the contract is deployed
 
-### Reset Everything
+### Issue: Frontend shows loading indefinitely
+**Solution**:
+1. Check browser console for errors
+2. Verify MetaMask is connected
+3. Ensure all dependencies are installed
 
-To start fresh:
-```bash
-# Stop the Hardhat node (Ctrl+C)
-# Clear cache
-npm run clean
+## 📊 Expected Results
 
-# Recompile
-npm run compile
+When everything is working correctly, you should see:
 
-# Start over from Step 1
-```
+### MetaMask Connection
+- ✅ MetaMask connects successfully
+- ✅ Account address is displayed
+- ✅ Network shows "Hardhat Local"
 
-## 📊 Understanding the System
+### Batch Lookup
+- ✅ Available batches are displayed
+- ✅ Clicking on batches shows complete data
+- ✅ Manual batch ID entry works
+- ✅ All data fields are populated
 
-### What's Happening Behind the Scenes:
+### Data Verification
+- ✅ `npm run verify` shows all ✅ marks
+- ✅ Backend health check shows "healthy"
+- ✅ Frontend loads without errors
 
-- **Smart Contract**: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
-- **Blockchain**: Local Hardhat network with 20 test accounts
-- **Gas Usage**: Each operation costs gas (free on local network)
-- **Events**: All operations emit blockchain events for transparency
+## 🎉 Success Indicators
 
-### Key Components:
+You'll know everything is working when:
 
-1. **AgroTrust.sol**: Main smart contract with all business logic
-2. **deploy.ts**: Script to deploy the contract
-3. **interact.ts**: Script to demonstrate the complete workflow
-4. **test/AgroTrust.ts**: Comprehensive test suite
-
-### Data Flow:
-```
-1. Batch Creation → 2. Farmer Info → 3. Cultivation → 4. Processing
-                                                    ↓
-8. Trace Data ← 7. Transfer Records ← 6. Certificates ← 5. Lab Results
-```
+1. ✅ **Hardhat node** shows "Started HTTP and WebSocket JSON-RPC server"
+2. ✅ **Contract deployment** shows "Deployment completed successfully"
+3. ✅ **Data population** shows all ✅ marks
+4. ✅ **MetaMask** connects to Hardhat Local network
+5. ✅ **Frontend** loads at http://localhost:3000
+6. ✅ **Batch lookup** shows real blockchain data
+7. ✅ **Backend** (optional) shows healthy status
 
 ## 🚀 Next Steps
 
-### Try These Experiments:
+Once the system is running:
 
-1. **Create another GI product** (Darjeeling Tea, Basmati Rice, etc.)
-2. **Query existing data** using the contract functions
-3. **Test access control** by trying operations with different accounts
-4. **Deploy to testnet** (Sepolia) for real blockchain testing
+1. **Explore the Interface**: Try all the features
+2. **Add New Batches**: Use the "Add Data" form
+3. **Test QR Codes**: Generate and scan QR codes
+4. **Monitor Transactions**: Check MetaMask for transaction history
+5. **Explore API**: Use the backend endpoints for integration
 
-### Production Deployment:
+## 📞 Getting Help
 
-When ready for production:
-1. Configure networks in `hardhat.config.ts`
-2. Set up environment variables
-3. Deploy to testnet: `npx hardhat run scripts/deploy.ts --network sepolia`
-4. Deploy to mainnet: `npx hardhat run scripts/deploy.ts --network mainnet`
+If you encounter issues:
 
-## 📞 Support
-
-If you encounter any issues:
-1. Check the error messages carefully
-2. Ensure all prerequisites are installed
-3. Try the troubleshooting steps above
-4. Check the main README.md for more details
+1. **Check all terminals** are running the correct services
+2. **Verify MetaMask configuration** is correct
+3. **Check browser console** for error messages
+4. **Ensure all ports** are available (3000, 3001, 8545)
+5. **Verify Node.js version** is 16 or higher
 
 ---
 
-## 🎉 Congratulations!
-
-You've successfully set up and run the AgroTrust blockchain system locally! The system demonstrates how blockchain technology can provide complete transparency and authenticity verification for Geographical Indication (GI) tagged agricultural products.
-
-**Key Achievements:**
-- ✅ Local blockchain network running
-- ✅ Smart contract deployed and functional
-- ✅ Complete GI product lifecycle tracked
-- ✅ All data immutable and verifiable
-- ✅ Ready for further development and testing
-
-The system is now ready for you to explore, modify, and extend as needed! 🌾✨ 
+**🎯 Your AgroTrust system is now fully operational with MetaMask integration and real blockchain data!** 
